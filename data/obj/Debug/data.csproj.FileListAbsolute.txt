@@ -1,0 +1,11 @@
+C:\Users\khlop\source\repos\data\data\bin\Debug\data.exe.config
+C:\Users\khlop\source\repos\data\data\bin\Debug\data.exe
+C:\Users\khlop\source\repos\data\data\bin\Debug\data.pdb
+C:\Users\khlop\source\repos\data\data\obj\Debug\data.csproj.AssemblyReference.cache
+C:\Users\khlop\source\repos\data\data\obj\Debug\data.csproj.SuggestedBindingRedirects.cache
+C:\Users\khlop\source\repos\data\data\obj\Debug\data.Form1.resources
+C:\Users\khlop\source\repos\data\data\obj\Debug\data.Properties.Resources.resources
+C:\Users\khlop\source\repos\data\data\obj\Debug\data.csproj.GenerateResource.cache
+C:\Users\khlop\source\repos\data\data\obj\Debug\data.csproj.CoreCompileInputs.cache
+C:\Users\khlop\source\repos\data\data\obj\Debug\data.exe
+C:\Users\khlop\source\repos\data\data\obj\Debug\data.pdb
