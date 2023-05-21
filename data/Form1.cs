@@ -9,19 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace data
 {
     public partial class Form1 : Form
     {
-        Dictionary<int, string> animals = new Dictionary<int, string>()
-        {
-            { 0, "Крыса" }, { 1, "Бык" }, { 2, "Тигр" },
-            { 3, "Кролик" }, { 4, "Дракон" }, { 5, "Змея" },
-            { 6, "Лошадь" }, { 7, "Коза" }, { 8, "Обезьяна" },
-            { 9, "Петух" }, { 10, "Собака" }, { 11, "Свинья" }
-        };
 
         public Form1()
         {
@@ -43,6 +35,31 @@ namespace data
             if ((d >= 21 && m == 1) || (d <= 18 && m == 2)) return "Водолей";
             else return "Рыбы";
         }
+        string GetAnimal(int value)
+        {
+            if (value == 0) return "Крыса";
+            if (value == 1) return "Бык";
+            if (value == 2) return "Тигр";
+            if (value == 3) return "Кролик";
+            if (value == 4) return "Дракон";
+            if (value == 5) return "Змея";
+            if (value == 6) return "Лошадь";
+            if (value == 7) return "Коза";
+            if (value == 8) return "Обезьяна";
+            if (value == 9) return "Петух";
+            if (value == 10) return "Собака";
+            return "Свинья";
+        }
+        string GetDayOfWeek(DayOfWeek value)
+        {
+            if (value == DayOfWeek.Monday) return "Понедельник";
+            if (value == DayOfWeek.Tuesday) return "Вторник";
+            if (value == DayOfWeek.Wednesday) return "Среда";
+            if (value == DayOfWeek.Thursday) return "Четверг";
+            if (value == DayOfWeek.Friday) return "Пятница";
+            if (value == DayOfWeek.Saturday) return "Суббота";
+            return "Воскресенье";
+        }
 
         private void DateChangeed(object sender, EventArgs e)
         {
@@ -55,32 +72,51 @@ namespace data
             CurrentDateFull.Text = now.ToString("F");
 
 
-            Week.Text = CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.GetDayName(birthday.DayOfWeek);
-            Leap.Text = DateTime.IsLeapYear(birthday.Year) ? "Год вискокосный" : "Год не високосный";
-            TotalDays.Text = $"Вы прожили {(int)time.TotalDays} дней";
+            Week.Text = GetDayOfWeek(birthday.DayOfWeek);
+            if (DateTime.IsLeapYear(birthday.Year))
+            {
+                Leap.Text = "Год вискокосный";
+            }
+            else
+            {
+                Leap.Text = "Год не високосный";
+            }
+
+            if (now <= birthday)
+            {
+                TotalDays.Text = "Вы прожили " + (int)time.TotalDays + " дней";
 
 
-            TotalDays.Text = $"Вы прожили {(int)time.TotalDays} дней";
-
-
-            Years.Text = $"Вы прожили {(int)time.TotalDays / 365} лет";
-            Months.Text = $"Вы прожили еще {(int)time.TotalDays % 365 / 30} месяцев";
-            Days.Text = $"Вы прожили еще {(int)time.TotalDays % 365 % 30} дня";
+                Years.Text = "Вы прожили " + (int)time.TotalDays / 365 + " лет";
+                Months.Text = "Вы прожили еще " + (int)time.TotalDays % 365 / 30 + " месяцев";
+                Days.Text = "Вы прожили еще " + (int)time.TotalDays % 365 % 30 + " дня";
+            }
+            else
+            {
+                TotalDays.Text = "Вы еще не родились(";
+            }
 
             string zodiakName = GetZodiak(birthday.Day, birthday.Month);
-            Zodiak.Text = $"Ваш знак {zodiakName}";
-            ZodiakDescription.Text = File.ReadAllText($"Resources/Texts/{zodiakName}.txt");
-            ZodiakImage.ImageLocation = $"Resources/Images/{zodiakName}.png";
+            Zodiak.Text = "Ваш знак " + zodiakName;
+            ZodiakDescription.Text = File.ReadAllText("Resources/Texts/" + zodiakName + ".txt");
+            ZodiakImage.ImageLocation = $"Resources/Images/" + zodiakName + ".png";
 
             DateTime CurrentBirthday = birthday.AddYears(now.Year - birthday.Year);
 
+            if (CurrentBirthday < now)
+            {
+                NextBirthday.Text = "До предыдущего дня рождения " + Math.Round((now - CurrentBirthday).TotalDays);
+            }
+            else
+            {
+                NextBirthday.Text = "До следующего дня рождения " + Math.Round((CurrentBirthday - now).TotalDays);
 
-            NextBirthday.Text = $"{(CurrentBirthday < now ? "До предыдущего дня рождения": "До следующего дня рождения") } {Math.Abs(Math.Round((now - CurrentBirthday).TotalDays))} дней";
+            }
 
             int chineseYear = (birthday.Year - 4) % 12;
-            Chinease.Text = $"Вы по китайскому гороскопу {animals[chineseYear]}";
+            Chinease.Text = "Вы по китайскому гороскопу " + GetAnimal(chineseYear);
 
-            ChineaseDescription.Text = File.ReadAllText($"Resources/Ch/{animals[chineseYear]}.txt");
+            ChineaseDescription.Text = File.ReadAllText($"Resources/Ch/" + GetAnimal(chineseYear) + ".txt");
 
 
         }
